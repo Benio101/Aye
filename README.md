@@ -59,7 +59,7 @@ Important notes:
 
 ### Core: `Aye.example.lua`
 Begin your addon with:
-```
+```lua
 local Aye = Aye;
 if not Aye.addModule("Aye.example") then return end;
 ```
@@ -71,7 +71,7 @@ Optional: Add `Aye.modules.example.OnEnable`
 Module's `OnEnable` is fired once when module is loaded by Aye itself.
 Put here all preparation operations, like adding new objects, initializing the Azeroth Defend–o–Bot 6000C™ etc.
 Example:
-```
+```lua
 Aye.modules.example.OnEnable = function()
 	-- start profiling (used to get ms precision)
 	if debugprofilestop() == nil then
@@ -91,7 +91,7 @@ end;
 Optional: `Aye.modules.example.events`
 Aye registers and handles all events existing in it's modules to futher fire `.events` events in it's modules.
 This means, you don't need to register your events, nor make any other frustrating code to handle it, just add `Aye.modules.example.events.EVENT_NAME` function, where `EVENT_NAME` is the name of event to handle. Vuala! Example:
-```
+```lua
 Aye.modules.example.events.ACHIEVEMENT_EARNED = function()
 	-- Achievement Earned
 	DoEmote("happy");
@@ -106,7 +106,7 @@ Command: `/aye module command`. `module` is case–insensitive recipient module 
 ```
 This command will send `Echo!` optional argument to `example` module.
 To handle this command, `example` module should use the `Aye.modules.example.slash` command. Example:
-```
+```lua
 Aye.modules.example.slash = function(command)
 	SendChatMessage(command, "yell");
 	SendChatMessage(command, "say");
@@ -149,19 +149,19 @@ Aye's structure (beside Ace) where `example` is your `Aye.` module name:
 
 ### Options: `Aye.example.options.lua`
 Begin your options file with:
-```
+```lua
 local Aye = Aye;
 if not Aye.load then return end;
 ```
 `local Aye` to cache it and `Aye.load` check to handle user *Insanity* *(see above)*.
 Then, add options object to `Aye.options.args.example` where `example` is your module name.
 Options object should follow the [`AceOptions` table format](https://www.wowace.com/addons/ace3/pages/ace-config-3-0-options-tables/) beginning with:
-```
+```lua
 name = "EXAMPLE_NAME",
 type = "group",
 ```
 where `EXAMPLE_NAME` is module name displayed in options, example:
-```
+```lua
 Aye.options.args.example = {
 	name = "Example addon",
 	type = "group",
@@ -191,13 +191,13 @@ Note that options should be saved in `Aye.db.global.example` db object, where `e
 
 ### Default Options: `Aye.example.options.default.lua`
 Begin your default options file with:
-```
+```lua
 local Aye = Aye;
 if not Aye.load then return end;
 ```
 `local Aye` to cache it and `Aye.load` check to handle user *Insanity* *(see above)*.
 Then, add default options object to `Aye.default.global.example` where `example` is your module name. Example:
-```
+```lua
 Aye.default.global.example = {
 	enable = true, -- Enable Options
 }
@@ -205,13 +205,13 @@ Aye.default.global.example = {
 
 ## Writting a new utility
 Begin your utility file with:
-```
+```lua
 local Aye = Aye;
 Aye.utils.example = Aye.utils.example or {};
 ```
 `local Aye` to cache it. Second line prevents overwriting existing util. It also allows easy fixing in case util breaks after some WOW patch, by simply fixing the come to new api and renaming util name.
 Then, add util functions to `Aye.utils.example` where `example` is your util name. Example:
-```
+```lua
 -- @noparam
 -- @return {bool} IsMale if player is Male
 Aye.utils.example.IsMale = Aye.utils.example.IsMale or function()
