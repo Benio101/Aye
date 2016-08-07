@@ -2,14 +2,21 @@
 ## SavedVariables: AyeDB
 ## Notes: All your exigents
 ## Author: Benio
-## Version: 1
+## Version: 1.0.1
 ## Interface: 70000
+## X-Curse-Packaged-Version: 1470570400
+## X-Curse-Project-Name: Aye
+## X-Curse-Project-ID: aye
+## X-Curse-Repository-ID: wow/aye/mainline
 
 #libs
-libs/AceAddon-3.0/AceAddon-3.0.xml
-libs/AceConfig-3.0/AceConfig-3.0.xml
-libs/AceDB-3.0/AceDB-3.0.xml
-libs/AceTimer-3.0/AceTimer-3.0.xml
+libs/LibStub\LibStub.lua
+libs/CallbackHandler-1.0\CallbackHandler-1.0.xml
+libs/AceAddon-3.0\AceAddon-3.0.xml
+libs/AceTimer-3.0\AceTimer-3.0.xml
+libs/AceDB-3.0\AceDB-3.0.xml
+libs/AceGUI-3.0\AceGUI-3.0.xml
+libs/AceConfig-3.0\AceConfig-3.0.xml
 
 #files
 Aye.h.lua
