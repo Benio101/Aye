@@ -4,10 +4,6 @@
 ## Author: Benio
 ## Version: 1.0.1
 ## Interface: 70000
-## X-Curse-Packaged-Version: 1470570400
-## X-Curse-Project-Name: Aye
-## X-Curse-Project-ID: aye
-## X-Curse-Repository-ID: wow/aye/mainline
 
 #libs
 libs/LibStub\LibStub.lua

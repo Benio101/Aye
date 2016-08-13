@@ -1,0 +1,102 @@
+#!/bin/bash
+if [ "$#" -ne 3 ]; then
+    echo "Usage: bash new MODULE_NAME AUTHOR_NAME INTERFACE_VERSION"
+	exit
+fi
+
+mkdir Aye.$1
+cd Aye.$1
+
+cat <<EOF > Aye.$1.toc
+## Title: Aye.$1
+## Notes: $1
+## Depot: Aye
+## LoadOnDemand: 1
+## Author: $2
+## Version: 0
+## Interface: $3
+
+#files
+Aye.$1.lua
+Aye.$1.options.lua
+Aye.$1.options.default.lua
+EOF
+
+cat <<EOF > Aye.$1.lua
+local Aye = Aye;
+if not Aye.addModule("Aye.$1") then return end;
+
+Aye.modules.$1.OnEnable = function()
+	
+end;
+
+Aye.modules.$1.events.EVENT_NAME = function()
+    
+end;
+
+Aye.modules.$1.slash = function(command)
+   
+end;
+EOF
+
+cat <<EOF > Aye.$1.options.lua
+local Aye = Aye;
+if not Aye.load then return end;
+
+Aye.options.args.$1 = {
+	name = "$1",
+	type = "group",
+	args = {
+		header1 = {
+			order = 1,
+			type = "header",
+			name = "$1",
+		},
+		description2 = {
+			order = 2,
+			type = "description",
+			name = "",
+		},
+		enable = {
+			order = 3,
+			name = "Enable",
+			desc = "Enable \"$1\" options at all",
+			type = "toggle",
+			get = function() return Aye.db.global.$1.enable end,
+			set = function(_, v)
+				Aye.db.global.$1.enable = v;
+			end,
+		},
+		execute5 = {
+			order = 5,
+			type = "execute",
+			name = "Disable & Reload",
+			func = function() DisableAddOn("Aye.$1"); ReloadUI(); end,
+			hidden = function() return Aye.db.global.$1.enable end,
+		},
+		description6 = {
+			order = 6,
+			type = "description",
+			name = "This module is currently temporary |cff9d9d9ddisabled|r at will and should no longer work.\n"
+				.. "|cff9d9d9dIf you wish to keep this module disabled, you should disable related addon completelly.\n"
+				.. "You can always re–enable module by re–enabling related addon addon the same way.\n|r"
+			,
+			hidden = function() return Aye.db.global.$1.enable end,
+		},
+		header11 = {
+			order = 11,
+			type = "header",
+			name = "\"$1\" options",
+		},
+	},
+};
+EOF
+
+cat <<EOF > Aye.$1.options.default.lua
+local Aye = Aye;
+if not Aye.load then return end;
+
+Aye.default.global.$1 = {
+	enable = true,
+};
+EOF
