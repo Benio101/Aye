@@ -9,6 +9,7 @@ Aye.libs.ConfigDialog = LibStub("AceConfigDialog-3.0");
 Aye.libs.ConfigRegistry = LibStub("AceConfigRegistry-3.0");
 Aye.libs.DB = LibStub("AceDB-3.0");
 Aye.libs.Timer = LibStub("AceTimer-3.0");
+Aye.libs.Inspect = LibStub("LibGroupInSpecT-1.1");
 
 -- utils
 -- /utils as Aye.utils functions
