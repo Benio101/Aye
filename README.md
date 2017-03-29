@@ -203,6 +203,8 @@ Aye.default.global.example = {
 }
 ```
 
+In order to access options from GUI, open Game Memu → Interface → Addons tab → Aye → *your addon name*.
+
 ## Writting a new utility
 Begin your utility file with:
 ```lua
