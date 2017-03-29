@@ -2,8 +2,8 @@
 ## SavedVariables: AyeDB
 ## Notes: All your exigents
 ## Author: Benio
-## Version: 1.0.3
-## Interface: 70100
+## Version: 1.0.4
+## Interface: 70200
 
 #libs
 libs/LibStub\LibStub.lua
