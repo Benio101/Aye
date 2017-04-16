@@ -126,7 +126,7 @@ Aye taints:
 
 Aye's structure (beside Ace) where `example` is your `Aye.` module name:
 
-- `Aye.libs` — libraries. Aye uses the following [Ace3](https://www.wowace.com/addons/ace3/) libraries:
+- `Aye.libs` — libraries. Aye uses few [Ace3](https://www.wowace.com/addons/ace3/) libraries, including:
     - [`AceAddon`](https://www.wowace.com/addons/ace3/pages/api/ace-addon-3-0/)
     - [`AceConfig`](https://www.wowace.com/addons/ace3/pages/api/ace-config-3-0/) as `Aye.libs.Config`
         - [`AceConfigDialog`](https://www.wowace.com/addons/ace3/pages/api/ace-config-dialog-3-0/) as `Aye.libs.ConfigDialog`
