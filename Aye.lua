@@ -12,7 +12,12 @@ Aye.OnEnable = function()
 				for DependencyID =1, #AddOnDependencies do
 					if AddOnDependencies[DependencyID] == "Aye" then
 						Aye.modules[name] = {events = {}};
-						LoadAddOn(AddOnID);
+						
+						-- failsafe load module
+						if not pcall(LoadAddOn, AddOnID) then
+							-- unregister module that failed to load
+							Aye.modules[name] = nil;
+						end;
 					end;
 				end;
 			end;
