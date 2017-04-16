@@ -100,19 +100,18 @@ end;
 
 #### commands
 Optional: `Aye.modules.example.slash`
-Command: `/aye module command`. `module` is case–insensitive recipient module name. `command` is optional command argument. Aye detects command module recipient and sends to it command optional argument. Example:
+Command: `/aye module [...]`. `module` is case–insensitive recipient module name. After `module` there can be passed space and any number of space separated arguments. Aye detects command module recipient and sends to it command optional arguments. Example:
 ```
-/aye example Echo!
+/aye example Echo! yell
 ```
-This command will send `Echo!` optional argument to `example` module.
+This command will send `Echo!` and `yell` as optional arguments to `example` module.
 To handle this command, `example` module should use the `Aye.modules.example.slash` command. Example:
 ```lua
-Aye.modules.example.slash = function(command)
-	SendChatMessage(command, "yell");
-	SendChatMessage(command, "say");
+Aye.modules.example.slash = function(message, channel)
+	SendChatMessage(message, channel);
 end;
 ```
-This example will cause to yell `Echo!` and say `Echo!`.
+This example will cause to yell `Echo!`.
 
 #### additional info
 Avoid tainting globals.

@@ -30,11 +30,11 @@ Aye.modules.$1.OnEnable = function()
 	
 end;
 
-Aye.modules.$1.events.EVENT_NAME = function()
+Aye.modules.$1.events.EVENT_NAME = function(...)
     
 end;
 
-Aye.modules.$1.slash = function(command)
+Aye.modules.$1.slash = function(...)
    
 end;
 EOF
