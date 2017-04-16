@@ -6,7 +6,7 @@ Aye.OnEnable = function()
 	for AddOnID =1, GetNumAddOns() do
 		local name, _, _, _, reason = GetAddOnInfo(AddOnID);
 		if reason == "DEMAND_LOADED" then
-			name = name:match("Aye%.(.*)");
+			name = name:match("^Aye%.(.*)");
 			if name ~= nil then
 				local AddOnDependencies = {GetAddOnDependencies(AddOnID)};
 				for DependencyID =1, #AddOnDependencies do
