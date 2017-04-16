@@ -28,15 +28,16 @@ Info for addon developers (if you are not addon developer, you can skip rest):
 ## Interface: INTERFACEVERSION
 
 #libs
-## Optional: list of addon specific librararies
+## Optional: list of addon specific libraries
 ## for clarity, place them in "libs/"
 ##
 ## @example
-##| libs/AceFoo-6.38/AceFoo-6.38.xml
-##| libs/Bar.lua
+##| libs/AceFoo-6.38\AceFoo-6.38.xml
+##| libs/Bar/Bar.lua
 
 #utils
 ## Optional: list of utilities
+## for clarity, place them in "utils/"
 ##
 ## @example
 ##| utils/Foo.lua
@@ -125,14 +126,18 @@ Aye taints:
 
 Aye's structure (beside Ace) where `example` is your `Aye.` module name:
 
-- `Aye.libs` — libraries. Aye uses few [Ace3](https://www.wowace.com/addons/ace3/) libraries, including:
+- `Aye.libs` — libraries. Aye uses the following [Ace3](https://www.wowace.com/addons/ace3/) libraries:
     - [`AceAddon`](https://www.wowace.com/addons/ace3/pages/api/ace-addon-3-0/)
     - [`AceConfig`](https://www.wowace.com/addons/ace3/pages/api/ace-config-3-0/) as `Aye.libs.Config`
         - [`AceConfigDialog`](https://www.wowace.com/addons/ace3/pages/api/ace-config-dialog-3-0/) as `Aye.libs.ConfigDialog`
         - [`AceConfigRegistry`](https://www.wowace.com/addons/ace3/pages/api/ace-config-registry-3-0/) as `Aye.libs.ConfigRegistry`
+		- [`AceConfigCmd`](https://www.wowace.com/projects/ace3/pages/api/ace-config-cmd-3-0/) as dependency library
     - [`AceDB`](https://www.wowace.com/addons/ace3/pages/api/ace-db-3-0/) as `Aye.libs.DB`
-    - [`AceTimer`](https://www.wowace.com/addons/ace3/pages/api/ace-timer-3-0/) as `Aye.libs.Timer`
-- `Aye.libs.Timer` — [`AceTimer`](https://www.wowace.com/addons/ace3/pages/api/ace-timer-3-0/) object. You are allowed, and should use `Aye.libs.Timer.example_callback` as `example` module's `callback` function (convention is to use module name followed by `_` followed by callback function name to keep `Aye.libs.Timer` taints orderly.
+	- [`AceGUI`](https://www.wowace.com/projects/ace3/pages/ace-gui-3-0-widgets/) as dependency library
+	
+	Additionally, Aye uses the following non–Ace dependency libraries:
+	- [`LibStub`](https://www.wowace.com/projects/libstub)
+	- [`CallbackHandler`](https://www.wowace.com/projects/callbackhandler)
 - `Aye.utils` — utilities
 - `Aye.modules` — modules. You are allowed, and thus, you should, for clarity, use `Aye.modules.example` object for your module data. If you need to init more subobjects, `.OnEnable` function is a right place for it.
 - `Aye.options` — Aye options object. You are allowed, and should use `Aye.options.example` object to put options of your module to in `Aye.options.lua` file *(see below)*.
@@ -208,14 +213,15 @@ In order to access options from GUI, open Game Memu → Interface → Addons tab
 Begin your utility file with:
 ```lua
 local Aye = Aye;
+if not LibStub:NewLibrary("Aye.utils.example", VERSION) then return end;
 Aye.utils.example = Aye.utils.example or {};
 ```
-`local Aye` to cache it. Second line prevents overwriting existing util. It also allows easy fixing in case util breaks after some WOW patch, by simply fixing the come to new api and renaming util name.
+`local Aye` to cache it. [`LibStub`](https://www.wowace.com/projects/libstub) provides usage of newest util version, we just need to pass `VERSION` as integer number. Third line allows loading deprecated functions from older library versions, to maintain backward compatibility, if needed.
 Then, add util functions to `Aye.utils.example` where `example` is your util name. Example:
 ```lua
 -- @noparam
 -- @return {bool} IsMale if player is Male
-Aye.utils.example.IsMale = Aye.utils.example.IsMale or function()
+Aye.utils.example.IsMale = function()
 	return UnitSex("player") == 2;
 end;
 ```
