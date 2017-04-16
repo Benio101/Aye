@@ -51,7 +51,7 @@ Aye.OnEnable = function()
 			if module.events then
 				for eventName, eventFunction in pairs(module.events) do
 					if eventName == event then
-						eventFunction(...);
+						pcall(eventFunction, ...);
 					end;
 				end;
 			end;
@@ -61,21 +61,24 @@ Aye.OnEnable = function()
 	-- execute modules OnEnable
 	for _, module in pairs(Aye.modules) do
 		if module.OnEnable then
-			module.OnEnable();
+			pcall(module.OnEnable);
 		end;
 	end;
 end;
 
 -- handle /aye command
 SlashCmdList['AYE'] = function(command)
-	local commandRecipient, message = strsplit(" ", command, 2);
+	command = {strsplit(" ", command)};
+	local recipient = command[1];
+	table.remove(command, 1);
+	
 	-- execute slash command
 	for moduleName, module in pairs(Aye.modules) do
 		if
-				string.lower(commandRecipient) == string.lower(moduleName)
+				string.lower(recipient) == string.lower(moduleName)
 			and	module.slash
 		then
-			module.slash(message);
+			pcall(module.slash, unpack(command));
 		end;
 	end;
 end;
