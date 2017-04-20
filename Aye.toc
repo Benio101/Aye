@@ -2,7 +2,7 @@
 ## SavedVariables: AyeDB
 ## Notes: All your exigents
 ## Author: Benio
-## Version: 1.0.5
+## Version: 1.0.6
 ## Interface: 70200
 
 #libs

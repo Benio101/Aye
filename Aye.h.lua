@@ -43,3 +43,7 @@ StaticPopupDialogs["AYE_INSANITY"] = {
 	hideOnEscape = false,
 	preferredIndex = 3,
 };
+
+-- errors
+-- list of errors to report
+Aye.errors = {};

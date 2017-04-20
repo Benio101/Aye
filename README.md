@@ -2,7 +2,7 @@
 ## All your exigents
 
 Aye is a light WOW modular Addon that provides *all your exigents*, with a little help of [Ace3](https://www.wowace.com/addons/ace3/) libs.
-Depot for many dependent addons *aka modules*, allows them to be written and run fast and easily.
+Depot for many dependent addons *aka modules*, allows them to be written and run fast, easily and safely.
 
 This addon is required for any `Aye.` modules, just install it, it does not makes anything by itself.
 Info for addon developers (if you are not addon developer, you can skip rest):
@@ -74,11 +74,6 @@ Put here all preparation operations, like adding new objects, initializing the A
 Example:
 ```lua
 Aye.modules.example.OnEnable = function()
-	-- start profiling (used to get ms precision)
-	if debugprofilestop() == nil then
-		debugprofilestart();
-	end;
-	
 	-- register addon messages
 	RegisterAddonMessagePrefix("Aye");	-- Aye
 	RegisterAddonMessagePrefix("D4");	-- DBM
@@ -150,6 +145,9 @@ Aye's structure (beside Ace) where `example` is your `Aye.` module name:
     - `Aye.frames.options` — options frame
         - `Aye.frames.options.default` — default options frame
     - `Aye.frames.root` — root frame to handle events and propagate them to modules
+- `Aye.assert` — *Debug* function, non–interrupting assert of Aye `pcall`ed executions
+- `Aye.error` — *Debug* function, reporting last error
+	- `Aye.error` — *Debug* container, list of errors to report
 
 ### Options: `Aye.example.options.lua`
 Begin your options file with:

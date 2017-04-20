@@ -14,7 +14,7 @@ Aye.OnEnable = function()
 						Aye.modules[name] = {events = {}};
 						
 						-- failsafe load module
-						if not pcall(LoadAddOn, AddOnID) then
+						if not Aye.assert(pcall(LoadAddOn, AddOnID)) then
 							-- unregister module that failed to load
 							Aye.modules[name] = nil;
 						end;
@@ -51,7 +51,7 @@ Aye.OnEnable = function()
 			if module.events then
 				for eventName, eventFunction in pairs(module.events) do
 					if eventName == event then
-						pcall(eventFunction, ...);
+						Aye.assert(pcall(eventFunction, ...));
 					end;
 				end;
 			end;
@@ -61,7 +61,7 @@ Aye.OnEnable = function()
 	-- execute modules OnEnable
 	for _, module in pairs(Aye.modules) do
 		if module.OnEnable then
-			pcall(module.OnEnable);
+			Aye.assert(pcall(module.OnEnable));
 		end;
 	end;
 end;
@@ -78,7 +78,7 @@ SlashCmdList['AYE'] = function(command)
 				string.lower(recipient) == string.lower(moduleName)
 			and	module.slash
 		then
-			pcall(module.slash, unpack(command));
+			Aye.assert(pcall(module.slash, unpack(command)));
 		end;
 	end;
 end;
@@ -87,7 +87,7 @@ SLASH_AYE1 = '/aye';
 -- does not adds the new module
 -- aye! it does really not adds
 --
--- @param {moduleName} module name not to add
+-- @param {string} moduleName module name not to add
 -- @return {bool} if module was^Wcan be added
 Aye.addModule = function(moduleName)
 	if Aye.load then
@@ -98,4 +98,33 @@ Aye.addModule = function(moduleName)
 		StaticPopup_Show("AYE_INSANITY");
 		return false;
 	end;
+end;
+
+-- non–interrupting assert of pcalled executions
+-- thanks for inspiration to nevcairiel and Vlad
+--
+-- @param {bool} status pcall returned status
+-- @param message pcall returned status message
+-- @return {bool} status pcall returned status
+Aye.assert = function(status, message)
+	if not status then
+		table.insert(Aye.errors, message);
+		C_Timer.After(0, Aye.error);
+	end;
+	
+	return status;
+end;
+
+-- report last error
+--
+-- @noparam
+-- @noreturn
+Aye.error = function()
+	local message = table.remove(Aye.errors, 1);
+	
+	if #Aye.errors >0 then
+		C_Timer.After(0, Aye.error);
+	end;
+	
+	error(message);
 end;
