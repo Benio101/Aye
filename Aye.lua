@@ -1,14 +1,19 @@
 local Aye = Aye;
 
 Aye.OnEnable = function()
+	-- allow loading modules
+	Aye.load = true;
+	
 	-- load modules
-	Aye.load = true; -- allow loading modules
 	for AddOnID =1, GetNumAddOns() do
 		local name, _, _, _, reason = GetAddOnInfo(AddOnID);
+		
 		if reason == "DEMAND_LOADED" then
 			name = name:match("^Aye%.(.*)");
-			if name ~= nil then
+			
+			if name then
 				local AddOnDependencies = {GetAddOnDependencies(AddOnID)};
+				
 				for DependencyID =1, #AddOnDependencies do
 					if AddOnDependencies[DependencyID] == "Aye" then
 						Aye.modules[name] = {events = {}};
@@ -23,7 +28,9 @@ Aye.OnEnable = function()
 			end;
 		end;
 	end;
-	Aye.load = nil; -- forbid loading modules
+	
+	-- forbid loading modules
+	Aye.load = nil;
 	
 	-- add options
 	Aye.db = Aye.libs.DB:New("AyeDB", Aye.default, true);
@@ -69,8 +76,7 @@ end;
 -- handle /aye command
 SlashCmdList['AYE'] = function(command)
 	command = {strsplit(" ", command)};
-	local recipient = command[1];
-	table.remove(command, 1);
+	local recipient = table.remove(command, 1);
 	
 	-- execute slash command
 	for moduleName, module in pairs(Aye.modules) do
