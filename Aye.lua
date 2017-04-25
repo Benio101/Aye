@@ -127,6 +127,7 @@ end;
 -- @noreturn
 Aye.error = function()
 	local message = table.remove(Aye.errors, 1);
+	if not message then return end;
 	
 	if #Aye.errors >0 then
 		C_Timer.After(0, Aye.error);
